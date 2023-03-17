@@ -1,0 +1,7 @@
+<div class="single-col" *ngIf="!loading">
+    <button type="button" routerLink="/models" color="primary" mat-raised-button aria-label="Back to view models">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <app-detail-model modelId="{{ modelId }}"></app-detail-model>
+</div>
+  

@@ -1,0 +1,42 @@
+<div *ngIf="!loading" class="add-wrapper flex flex-col justify-start items-center">
+    <form class="add-container" #myform="ngForm" (ngSubmit)="onSubmit(myform)"
+        *ngIf="user.role == 'Owner' || user.role == 'Editor'">
+        <mat-card>
+            <mat-card-title class="card-title">Add New Model (.OBJ ONLY)</mat-card-title>
+            <mat-card-content>
+                <div class="flex flex-col justify-start items-center">
+                    <!-- title -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text" name="title" placeholder="Enter Title" ngModel>
+                    </mat-form-field>
+                    <!-- description -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <input matInput type="text" name="description" placeholder="Enter Description" ngModel>
+                    </mat-form-field>
+                    <!-- title -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Credits</mat-label>
+                        <input matInput type="text" name="credits" placeholder="Enter Credits" ngModel>
+                    </mat-form-field>
+                    <!-- file -->
+                    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                    <input hidden (change)="onFileSelected()" accept=".obj" #fileInput type="file" id="file">
+                </div>
+            </mat-card-content>
+            <!-- error messages & add button -->
+            <mat-card-actions>
+                <div class="full-width flex flex-col justify-center items-center">
+                    <div *ngIf="errorMsgs.length > 0" class="error-msgs flex flex-col justify-center items-start">
+                        <div *ngFor="let errorMsg of errorMsgs">Error: {{ errorMsg }}</div>
+                    </div>
+                    <div *ngIf="serverErrorMsgs.length > 0" class="error-msgflex flex-col justify-center items-start">
+                        <div *ngFor="let serverErrorMsg of serverErrorMsgs">Error: {{ serverErrorMsg }}</div>
+                    </div>
+                    <button mat-raised-button type="submit" color="primary" aria-label="Upload model button">Upload Model</button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

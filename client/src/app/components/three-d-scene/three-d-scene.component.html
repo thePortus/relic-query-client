@@ -1,0 +1,161 @@
+<div class="full-width h-full flex max-sm:flex-col flex-row justify-start items-start">
+    <div class="w-2/3">
+        <canvas #canvas id="canvas" style="height: 100%; width: 100%;"></canvas>
+    </div>
+    <div class="w-1/3 h-full padded-content flex flex-col justify-start items-center">
+        <button class="full-width margin-content" *ngIf="showControls != 'directional' && showControls == 'None'" color="primary" mat-raised-button (click)="showControls = 'directional'">
+            Show Directional Light Controls
+        </button>
+        <div *ngIf="showControls == 'directional'" class="full-width framed-content padded-content flex flex-col justify-start items-center">
+            <div class="padded-content">Directional Light</div>
+            <button class="full-width" color="primary" mat-raised-button (click)="showControls = 'None'">
+                Hide Directional Light Controls
+            </button>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Strength</div>
+                <mat-slider class="full-width" min="0" max="1.5" step="0.05" (input)="setDirectionalLightStrength($event)">
+                    <input class="full-width" matSliderThumb>
+                </mat-slider>
+            </div>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Position</div>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>X</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter X" (change)="setDirectionalLightPosition()" [(ngModel)]="directionalLightInfo.x">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Y</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Y" (change)="setDirectionalLightPosition()" [(ngModel)]="directionalLightInfo.y">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Z</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Z" (change)="setDirectionalLightPosition()" [(ngModel)]="directionalLightInfo.z">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- light 1 -->
+        <button class="full-width margin-content" *ngIf="showControls != 'light1' && showControls == 'None'" color="primary" mat-raised-button (click)="showControls = 'light1'">
+            Show Point Light 1 Controls
+        </button>
+        <div *ngIf="showControls == 'light1'" class="full-width framed-content padded-content flex flex-col justify-start items-center">
+            <div class="padded-content">Light 1</div>
+            <button class="full-width" color="primary" mat-raised-button (click)="showControls = 'None'">
+                Hide Point Light 1 Controls
+            </button>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Strength</div>
+                <mat-slider class="full-width" min="0" max="1.5" step="0.05" (input)="setLight1Strength($event)">
+                    <input class="full-width" matSliderThumb>
+                </mat-slider>
+            </div>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Position</div>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>X</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter X" (change)="setLight1Position()" [(ngModel)]="light1Info.x">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Y</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Y" (change)="setLight1Position()" [(ngModel)]="light1Info.y">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Z</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Z" (change)="setLight1Position()" [(ngModel)]="light1Info.z">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- light 2-->
+        <button class="full-width margin-content" *ngIf="showControls != 'light2' && showControls == 'None'" color="primary" mat-raised-button (click)="showControls = 'light2'">
+            Show Point Light 2 Controls
+        </button>
+        <div *ngIf="showControls == 'light2'" class="full-width framed-content padded-content flex flex-col justify-start items-center">
+            <div class="padded-content">Light 2</div>
+            <button class="full-width" color="primary" mat-raised-button (click)="showControls = 'None'">
+                Hide Point Light 2 Controls
+            </button>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Strength</div>
+                <mat-slider class="full-width" min="0" max="1.5" step="0.05" (input)="setLight2Strength($event)">
+                    <input class="full-width" matSliderThumb>
+                </mat-slider>
+            </div>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Position</div>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>X</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter X" (change)="setLight2Position()" [(ngModel)]="light2Info.x">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Y</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Y" (change)="setLight2Position()" [(ngModel)]="light2Info.y">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Z</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Z" (change)="setLight2Position()" [(ngModel)]="light2Info.z">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- light 3 -->
+        <button class="full-width margin-content" *ngIf="showControls != 'light3' && showControls == 'None'" color="primary" mat-raised-button (click)="showControls = 'light3'">
+            Show Point Light 3 Controls
+        </button>
+        <div *ngIf="showControls == 'light3'" class="full-width framed-content padded-content flex flex-col justify-start items-center">
+            <div class="padded-content">Light 3</div>
+            <button class="full-width" color="primary" mat-raised-button (click)="showControls = 'None'">
+                Hide Point Light 3 Controls
+            </button>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Strength</div>
+                <mat-slider class="full-width" min="0" max="1.5" step="0.05" (input)="setLight3Strength($event)">
+                    <input class="full-width" matSliderThumb>
+                </mat-slider>
+            </div>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Position</div>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>X</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter X" (change)="setLight3Position()" [(ngModel)]="light3Info.x">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Y</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Y" (change)="setLight3Position()" [(ngModel)]="light3Info.y">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Z</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Z" (change)="setLight3Position()" [(ngModel)]="light3Info.z">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- light 4 -->
+        <button class="full-width margin-content" *ngIf="showControls != 'light4' && showControls == 'None'" color="primary" mat-raised-button (click)="showControls = 'light4'">
+            Show Point Light 4 Controls
+        </button>
+        <div *ngIf="showControls == 'light4'" class="full-width framed-content padded-content flex flex-col justify-start items-center">
+            <div class="padded-content">Light 4</div>
+            <button class="full-width" color="primary" mat-raised-button (click)="showControls = 'None'">
+                Hide Point Light 4 Controls
+            </button>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Strength</div>
+                <mat-slider class="full-width" min="0" max="1.5" step="0.05" (input)="setLight4Strength($event)">
+                    <input class="full-width" matSliderThumb>
+                </mat-slider>
+            </div>
+            <div class="full-width framed-content padded-content flex flex-col justify-start items-center">
+                <div class="padded-content">Position</div>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>X</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter X" (change)="setLight4Position()" [(ngModel)]="light4Info.x">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Y</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Y" (change)="setLight4Position()" [(ngModel)]="light4Info.y">
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Z</mat-label>
+                    <input matInput type="text" name="title" placeholder="Enter Z" (change)="setLight4Position()" [(ngModel)]="light4Info.z">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

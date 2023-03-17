@@ -1,0 +1,7 @@
+@use "sass:map";
+
+@import './../../../../styles-settings';
+
+:host button a {
+  color: map.get($mat-site-primary, 'contrast', A700);
+}

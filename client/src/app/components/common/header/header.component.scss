@@ -1,0 +1,77 @@
+@use "sass:map";
+
+@import "../../../../styles-settings";
+
+:host button a {
+  color: map.get($mat-site-primary, 900);
+  text-decoration: none;
+}
+
+:host mat-toolbar {
+  padding: 35px;
+  position: fixed;
+  z-index: 9998;
+}
+
+:host button {
+  margin: 5px;
+}
+
+// If the screen size is 601px wide or more, set for large screen
+@media screen and (min-width: 601px) {
+  :host .header-title {
+    font-size: 1.4em;
+    line-height: 1.4em;
+    text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.6),
+    0 0 5px rgba(255, 255, 255, 0.6),
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 42px map.get($mat-site-accent, 400),
+    0 0 82px map.get($mat-site-accent, 400),
+    0 0 92px map.get($mat-site-accent, 400),
+    0 0 102px map.get($mat-site-accent, 400),
+    0 0 151px map.get($mat-site-accent, 400);
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: #ffffff;
+  }
+
+  :host .header-credit {
+    font-size: 0.75em;
+    line-height: .75em;
+    text-shadow:
+    0 0 7px rgba(255, 255, 255, 0.6),
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 21px rgba(255, 255, 255, 0.6),
+    0 0 42px map.get($mat-site-accent, 400),
+    0 0 82px map.get($mat-site-accent, 400),
+    0 0 92px map.get($mat-site-accent, 400),
+    0 0 102px map.get($mat-site-accent, 400),
+    0 0 151px map.get($mat-site-accent, 400);
+  }
+
+  :host .header-button a {
+    font-size: 1em;
+  }
+}
+
+// If the screen size is 600px wide or less, set for mobile
+@media screen and (max-width: 600px) {
+  :host .header-title {
+    font-size: .8em;
+    line-height: 1.6em;
+  }
+
+  :host .header-credit {
+    font-size: .6em;
+    line-height: .6em;
+  }
+
+  :host .header-button a {
+    font-size: 1em;
+  }
+
+  :host .header-button {
+    font-size: 1em;
+  }
+}

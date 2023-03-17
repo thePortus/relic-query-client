@@ -74,10 +74,10 @@ export const Specs = {
         }, {
           link: 'https://www.npmjs.com/package/rxjs',
           label: 'rxjs'
-        }, , {
+        }, {
           link: 'https://www.npmjs.com/package/three',
           label: 'three'
-        },, {
+        }, {
           link: 'https://www.npmjs.com/package/tslib',
           label: 'tslib'
         }, {

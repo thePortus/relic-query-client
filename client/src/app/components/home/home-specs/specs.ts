@@ -29,10 +29,6 @@ export const Specs = {
         label: 'Client',
         link: 'https://github.com/thePortus/relic-query-client',
         value: 'relic-query-client'
-      }, {
-        label: 'Data',
-        link: 'https://github.com/thePortus/relic-query-data',
-        value: 'relic-query-data'
       }
     ],
     // project dependenceis

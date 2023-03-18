@@ -15,7 +15,8 @@ export class AddModelComponent implements OnInit {
   @Output() successfullyAdded = new EventEmitter<string>();
 
   // loading flag & error messages
-  loading: boolean = true;
+  loading: boolean = false;
+  loadingError: boolean = false;
   errorMsgs: string[] = [];
   serverErrorMsgs: string[] = [];
   // observable and local object for user data
@@ -81,6 +82,7 @@ export class AddModelComponent implements OnInit {
    * @param form Form data
    */
   onSubmit(form: NgForm) {
+    this.loading = true;
     var reqObject = {
       title: '',
       description: '',
@@ -94,10 +96,12 @@ export class AddModelComponent implements OnInit {
       this._api.postTypeRequest('models', reqObject).subscribe((res: any) => {
         if (res.status !== 0) {
           alert('Model successfully uploaded!');
+          this.loading = false;
           this.successfullyAdded.emit(res);
         }
         else {
           this.serverErrorMsgs = res.messages;
+          this.loadingError = true;
         }
       });
     }

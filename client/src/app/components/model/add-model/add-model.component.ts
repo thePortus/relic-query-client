@@ -23,7 +23,8 @@ export class AddModelComponent implements OnInit {
   userDetails$: Observable<User>;
   user: any;
   // stores uploaded file data & filename
-  srcResult: any;
+  modelData: any;
+  materialData: any;
   srcName: string;
 
   constructor(
@@ -62,14 +63,28 @@ export class AddModelComponent implements OnInit {
     return isValid;
   }
 
-  onFileSelected() {
-    const inputNode: any = document.querySelector('#file');
+  onModelSelected() {
+    const inputNode: any = document.querySelector('#model');
   
     if (typeof (FileReader) !== 'undefined') {
       const reader = new FileReader();
   
       reader.onload = (e: any) => {
-        this.srcResult = e.target.result;
+        this.modelData = e.target.result;
+      };
+  
+      reader.readAsText(inputNode.files[0]);
+    }
+  }
+
+  onMaterialSelected() {
+    const inputNode: any = document.querySelector('#material');
+  
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+  
+      reader.onload = (e: any) => {
+        this.materialData = e.target.result;
       };
   
       reader.readAsText(inputNode.files[0]);
@@ -87,11 +102,13 @@ export class AddModelComponent implements OnInit {
       title: '',
       description: '',
       credits: '',
-      file: ''
+      model: '',
+      material: ''
     };
     // copy values from form into request object
     Object.assign(reqObject, form.value);
-    reqObject.file = this.srcResult;
+    reqObject.model = this.modelData;
+    reqObject.material = this.materialData;
     if (this._validate(reqObject)) {
       this._api.postTypeRequest('models', reqObject).subscribe((res: any) => {
         if (res.status !== 0) {

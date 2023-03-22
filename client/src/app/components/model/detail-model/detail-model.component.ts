@@ -21,8 +21,9 @@ export class DetailModelComponent implements OnInit {
   // loading flag & error messages
   loading: boolean = true;
   loadingError: boolean = false;
-  // download link for the file
-  downloadHref: any;
+  // download link for the files
+  downloadModelHref: any;
+  downloadMaterialHref: any;
   // storage for current item data from server
   protectedData: any;
 
@@ -51,8 +52,10 @@ export class DetailModelComponent implements OnInit {
   update() {
     this._api.getTypeRequest('models/' + this.modelId).subscribe((res: any) => {
       this.protectedData = res;
-      let downloadFile = this.protectedData.data;
-      this.downloadHref = this.sanitizer.bypassSecurityTrustUrl('data:text;charset=UTF-8,' + encodeURIComponent(downloadFile));
+      let downloadFile = this.protectedData.modelData;
+      this.downloadModelHref = this.sanitizer.bypassSecurityTrustUrl('data:text;charset=UTF-8,' + encodeURIComponent(downloadFile));
+      downloadFile = this.protectedData.materialData;
+      this.downloadMaterialHref = this.sanitizer.bypassSecurityTrustUrl('data:text;charset=UTF-8,' + encodeURIComponent(downloadFile));
       //this.createControls();
       this.loading = false;
     }, (error: any) => {

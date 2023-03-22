@@ -1,8 +1,12 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 
 import * as THREE from 'three';
+/*
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+*/
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 interface AmbientLightInfo {
@@ -23,8 +27,9 @@ interface LightInfo {
   templateUrl: './three-d-scene.component.html',
   styleUrls: ['./three-d-scene.component.scss']
 })
-export class ThreeDSceneComponent implements AfterViewInit {
-  @Input() data: any;
+export class ThreeDSceneComponent implements AfterViewInit, OnDestroy {
+  @Input() modelData: any;
+  @Input() materialData: any;
 
   @ViewChild('canvas', { static: true }) private canvasRef: ElementRef<HTMLCanvasElement>;
 
@@ -36,6 +41,7 @@ export class ThreeDSceneComponent implements AfterViewInit {
   private camera!: THREE.PerspectiveCamera;
   private scene!: THREE.Scene;
   private model: any;
+  private material: any;
   private controls: any;
   private fieldOfView: 1;
   private nearClippingPlane: 0.1;
@@ -57,6 +63,8 @@ export class ThreeDSceneComponent implements AfterViewInit {
   private light2!:any;
   private light3!:any;
   private light4!:any;
+  private hemisphereLight!:any;
+
   light1Info: LightInfo = {
     strength: 0.35,
     color: 0xffffff,
@@ -85,6 +93,11 @@ export class ThreeDSceneComponent implements AfterViewInit {
     y: 300,
     z: 500
   };
+  hemisphereLightInfo: any = {
+    skyColor: 0xffeeb1,
+    groundColor: 0x080820,
+    intensity: 1
+  };
   showControls: string = 'None';
 
 
@@ -94,33 +107,63 @@ export class ThreeDSceneComponent implements AfterViewInit {
     this.startRenderingLoop();
   }
 
+  ngOnDestroy(): void {
+    this.renderer.setAnimationLoop(null); 
+  }
+
   getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
 
   private createScene() {
     this.scene = new THREE.Scene();
-    this.model = new OBJLoader().parse(this.data);
-    let box = new THREE.Box3().setFromObject(this.model);
-    box.getCenter(this.model.position);
-    this.model.position.multiplyScalar(-1);
-    this.scene.add(this.model);
-    this.ambientLight = new THREE.AmbientLight(this.ambientLightInfo.color, this.ambientLightInfo.strength);
-    this.scene.add(this.ambientLight);
+    //this.material = new MTLLoader().parse(this.materialData, '/assets/images/');
+    new GLTFLoader().parse(this.modelData, '/assets/images', (gltf) => {
+      this.model = gltf.scene;
+      let box = new THREE.Box3().setFromObject(this.model);
+      box.getCenter(this.model.position);
+      this.model.position.multiplyScalar(-1);
+
+      this.scene.add(this.model);
+      this.scene.background = new THREE.Color(0x111111);
+    });
+    //this.ambientLight = new THREE.AmbientLight(this.ambientLightInfo.color, this.ambientLightInfo.strength);
+    //this.scene.add(this.ambientLight);
+    this.hemisphereLight = new THREE.HemisphereLight(this.hemisphereLightInfo.skyColor, this.hemisphereLightInfo.groundColor, this.hemisphereLightInfo.intensity);
+    this.scene.add(this.hemisphereLight);
     this.directionalLight = new THREE.DirectionalLight(this.directionalLightInfo.color, this.directionalLightInfo.strength);
     this.directionalLight.position.set(this.directionalLightInfo.x, this.directionalLightInfo.y, this.directionalLightInfo.z);
     this.directionalLight.castShadow = true;
+    this.directionalLight.shadow.bias = -0.0001;
+    this.directionalLight.shadow.mapSize.height = 1024 * 4;
+    this.directionalLight.shadow.mapSize.width = 1024 * 4;
     this.scene.add(this.directionalLight);
     this.light1 = new THREE.PointLight(this.light1Info.color, this.light1Info.strength);
+    this.light1.castShadow = true;
+    this.light1.shadow.bias = -0.0001;
+    this.light1.shadow.mapSize.height = 1024 * 4;
+    this.light1.shadow.mapSize.width = 1024 * 4;
     this.light1.position.set(this.light1Info.x, this.light1Info.y, this.light1Info.z);
     this.scene.add(this.light1);
     this.light2 = new THREE.PointLight(this.light2Info.color, this.light2Info.strength);
+    this.light2.castShadow = true;
+    this.light2.shadow.bias = -0.0001;
+    this.light2.shadow.mapSize.height = 1024 * 4;
+    this.light2.shadow.mapSize.width = 1024 * 4;
     this.light2.position.set(this.light2Info.x, this.light2Info.y, this.light2Info.z);
     this.scene.add(this.light2);
     this.light3 = new THREE.PointLight(this.light3Info.color, this.light3Info.strength);
+    this.light3.castShadow = true;
+    this.light3.shadow.bias = -0.0001;
+    this.light3.shadow.mapSize.height = 1024 * 4;
+    this.light3.shadow.mapSize.width = 1024 * 4;
     this.light3.position.set(this.light2Info.x, this.light2Info.y, this.light2Info.z);
     this.scene.add(this.light3);
     this.light4 = new THREE.PointLight(this.light4Info.color, this.light4Info.strength);
+    this.light4.castShadow = true;
+    this.light4.shadow.bias = -0.0001;
+    this.light4.shadow.mapSize.height = 1024 * 4;
+    this.light4.shadow.mapSize.width = 1024 * 4;
     this.light4.position.set(this.light2Info.x, this.light2Info.y, this.light2Info.z);
     this.scene.add(this.light4);
   }
@@ -129,6 +172,8 @@ export class ThreeDSceneComponent implements AfterViewInit {
     this.camera = new THREE.PerspectiveCamera(75, this.getAspectRatio(), this.nearClippingPlane, this.farClippingPlane);
     this.renderer = new THREE.WebGLRenderer( { canvas: this.canvas, antialias: true });
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.toneMapping = THREE.ReinhardToneMapping;
+    this.renderer.toneMappingExposure = 2.3;
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.autoRotate = true;
     this.controls.enableZoom = true;

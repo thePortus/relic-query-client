@@ -18,7 +18,7 @@
             <!-- title -->
             <mat-card-subtitle class="card-subtitle">{{ protectedData.title }}</mat-card-subtitle>
             <!-- edit / delete buttons -->
-            <div class="full-width flex flex-row justify-center items-center"  *ngIf="user.role == 'Owner' || user.role == 'Editor'">
+            <div class="full-width flex flex-row justify-center items-center"  *ngIf="(user.role == 'Owner' || user.role == 'Editor') && (user.username == protectedData.uploadedBy || user.role == 'Owner')">
                 <button class="full-width" routerLink="{{'/conferences/edit/' + protectedData.id}}" color="accent" mat-raised-button aria-label="Edit conference">
                   <mat-icon>edit</mat-icon>
                 </button>

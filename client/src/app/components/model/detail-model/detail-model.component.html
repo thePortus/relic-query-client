@@ -45,9 +45,6 @@
             <div class="full-width framed-content max-sm:margin-content-top flex flex-col justify-start items-center">
               <button mat-raised-button color="primary"><a [href]="downloadModelHref" download="download.obj">Download Model</a></button>
             </div>
-            <div class="full-width framed-content max-sm:margin-content-top flex flex-col justify-start items-center">
-              <button mat-raised-button color="primary"><a [href]="downloadMaterialHref" download="download.mtl">Download Material</a></button>
-            </div>
           </div>
           <div class="framed-content margin-content-top flex justify-center items-center">
             <app-three-d-scene style="height: 100%; width: 100%;" [modelData]="protectedData.modelData" [materialData]="protectedData.materialData"></app-three-d-scene>

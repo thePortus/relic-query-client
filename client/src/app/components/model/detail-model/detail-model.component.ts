@@ -23,7 +23,6 @@ export class DetailModelComponent implements OnInit {
   loadingError: boolean = false;
   // download link for the files
   downloadModelHref: any;
-  downloadMaterialHref: any;
   // storage for current item data from server
   protectedData: any;
 
@@ -54,9 +53,6 @@ export class DetailModelComponent implements OnInit {
       this.protectedData = res;
       let downloadFile = this.protectedData.modelData;
       this.downloadModelHref = this.sanitizer.bypassSecurityTrustUrl('data:text;charset=UTF-8,' + encodeURIComponent(downloadFile));
-      downloadFile = this.protectedData.materialData;
-      this.downloadMaterialHref = this.sanitizer.bypassSecurityTrustUrl('data:text;charset=UTF-8,' + encodeURIComponent(downloadFile));
-      //this.createControls();
       this.loading = false;
     }, (error: any) => {
       this.loadingError = true;
